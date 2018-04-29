@@ -1,0 +1,45 @@
+--- scene function 0x801a4014
+
+initially
+r3 is pointer to scene function args struct?
+r5 is pointer to pointer table?
+0x0010 from r3 contains pointer to pointer table of scene functions?
+r4 ?? specific scene ?
+255 - r4, and move to ctr register
+if >= 255, skip a bunch of code
+
+move the pointer to pointer table (r5) into r6
+and clear out r3
+
+load byte at r6 into r0
+if not equal to 255 then branch backwareds
+
+and compare r4 to r0
+if not equal, branch down
+and add 24 to r6 (pointer to pointer table)
+add 1 into r3 (init zero)
+if r0 != 255, go back to comparing r4 to r0
+
+if r4 == r0, 
+multiply r3 by 24 and put into r0
+add r5 (pointer to pointer table) and r0, and store in r27
+
+r5 contains pointer to pointer table of scene sub functions?
+r27 -> r3 becomes pointer to the arguments for sub function
+
+move 0x0003(0x80480000-0x62D0) into r0 (why?)
+
+do scene setup? (branch to other function)
+
+load scene sub function from sub function arguments 0x0004(r27)
+if it doesn't exist (null), skip the loading of it
+
+move r12 into lr
+move r27 into r3
+branch to sub function
+
+r12 contains pointer to scene sub function
+it's executed at 0x801a40b0
+801b16a8 - results screen
+801b14a0 - vs menu
+801b0ff8 - main menu
